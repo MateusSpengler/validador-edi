@@ -78,6 +78,7 @@ export default function Home() {
                                     {...register('fatura')}
                                     value={fatura}
                                     label="Fatura"
+                                    sx={{ backgroundColor: 'white' }}
                                     onChange={handleChangeFatura}
 
                                 >
@@ -92,6 +93,7 @@ export default function Home() {
                                     {...register('conhecimento')}
                                     value={conhecimento}
                                     label="Conhecimento"
+                                    sx={{ backgroundColor: 'white' }}
                                     onChange={handleChangeConhecimento}
                                 >
                                     <MenuItem value={6}>Tamanho 6</MenuItem>
@@ -110,12 +112,12 @@ export default function Home() {
                             multiline
                             rows={20}
                             placeholder="Digite o documento..."
-                            sx={{ width: '100%' }}
+                            sx={{ width: '100%', backgroundColor: 'white' }}
                             onChange={handleChangeDocumento}
                         />
                     </div>
                     <div className="textField_content_bottom">
-                        <Button variant="outlined" component="label">
+                        <Button variant="outlined" component="label" sx={{ backgroundColor: 'white' }}>
                             <FileDownloadRoundedIcon />
                             <Typography>Importar</Typography>
                             <input hidden accept=".txt" multiple type="file" onChange={handleChangeArquivo} />

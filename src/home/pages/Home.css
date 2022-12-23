@@ -122,12 +122,13 @@ body {
     gap: 2vw;
 }
 
-.logo_div_nav_bar{
+.logo_div_nav_bar {
     position: relative;
     width: 110px;
     height: 110px;
-  
+
 }
+
 .logo_nav_bar {
     position: absolute;
     top: 0px;
@@ -182,6 +183,7 @@ body {
 }
 
 @media screen and (max-width: 800px) {
+
     .content,
     .content_top,
     .form_content_top {
@@ -189,9 +191,13 @@ body {
         flex-direction: column;
     }
 
-    .nav_bar{
+    .nav_bar {
         width: 100%;
         font-size: 12pt;
+    }
+
+    .textField_content_bottom {
+        flex-direction: column;
     }
 
 }
