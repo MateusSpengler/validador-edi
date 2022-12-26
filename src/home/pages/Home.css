@@ -83,116 +83,207 @@ video,
 input,
 textarea,
 select {
-  background: transparent;
-  border: 0;
-  font-size: 100%;
-  margin: 0;
-  outline: 0;
-  padding: 0;
-  vertical-align: baseline;
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
 }
 
 body {
-  font-family: Arial;
-  margin: 0;
-  background: url("../images/fundo.png");
+    font-family: Arial;
+    margin: 0;
+    background: url("../images/fundo.png");
+
 }
 
 .header {
-  display: flex;
-  justify-content: center;
-  background-color: #28282B;
-  width: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #28282B;
+    width: auto;
 }
 
 .nav_bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 60%;
-  height: 80px;
-  color: white;
-  text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    height: 80px;
+    color: white;
+    text-align: center;
 }
 
 .title_nav_bar {
-  display: flex;
-  align-items: center;
-  gap: 2vw;
+    display: flex;
+    align-items: center;
+    gap: 2vw;
 }
 
 .logo_div_nav_bar {
-  position: relative;
-  width: 110px;
-  height: 110px;
+    position: relative;
+    width: 110px;
+    height: 110px;
 }
 
 .logo_nav_bar {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  transition-delay: 500ms;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transition-delay: 500ms;
 }
 
 .title_nav_bar {
-  font-size: 12pt;
+    font-size: 12pt;
 }
 
 .main {
-  display: flex;
-  justify-content: center;
-  width: auto;
+    display: flex;
+    justify-content: center;
+    width: auto;
 }
 
 .content {
-  width: 60%;
-  height: auto;
+    width: 60%;
+    height: auto;
 }
 
 .content_top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5vh;
 }
 
 .title_content_top {
-  padding: 0 5px;
+    padding: 0 5px;
 }
 
 .form_content_top {
-  display: flex;
+    display: flex;
 }
 
 .textField_content_center {
-  margin-top: 10px;
+    margin-top: 15px;
 }
 
 .textField_content_bottom {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.main_card {
+    display: flex;
+    justify-content: center;
+    width: auto;
+}
+
+.main_card_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5vh;
+}
+
+
+/*CARD TOP*/
+
+.card {
+    display: flex;
+    justify-content: center;
+}
+
+.main_card {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+}
+
+.main_card_top_linha,
+.main_card_top_data {
+    width: 15%;
+}
+
+.main_card_top_linha_content,
+.main_card_top_data_content {
+    height: 10vh;
+    display: grid;
+    align-items: center;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.main_card_top_linha_content_title {
+    font-size: 34pt;
+    font-weight: 700;
+
+}
+
+.main_card_top_linha_content_subtitle,
+.main_card_top_data_content_subtitle {
+    font-size: 14pt;
+}
+
+.main_card_top_linha_content_title_img {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.main_card_top_linha_content_title_img {
+    top: 0px;
+    left: 0px;
+    width: 30%;
+    height: 30%;
+    object-fit: cover;
+    object-position: center center;
+    transition-delay: 500ms;
+}
+
+.main_card_top_info {
+    width: 65%;
+}
+
+.main_card_top_info_content {
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.main_card_top_info_content_title{
+    
 }
 
 @media screen and (max-width: 800px) {
-  .content,
-  .content_top,
-  .form_content_top {
-    width: 100%;
-    flex-direction: column;
-  }
 
-  .nav_bar {
-    width: 100%;
-    font-size: 12pt;
-  }
+    .content,
+    .content_top,
+    .form_content_top {
+        width: 100%;
+        flex-direction: column;
+    }
 
-  .textField_content_bottom {
-    flex-direction: column;
-  }
+    .nav_bar {
+        width: 100%;
+        font-size: 12pt;
+    }
+
+    .textField_content_bottom {
+        flex-direction: column;
+    }
 }
