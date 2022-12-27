@@ -1,9 +1,10 @@
 import * as React from "react";
+import { useState } from "react";
 import "./Home.css";
 import "../javascript/HomeValidador";
 import { useForm } from "react-hook-form";
 import Lince from "../images/lince.png";
-import Calendar from "../images/calendar.jpg";
+import Calendar from "../images/calendar.jpg"
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -13,7 +14,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FileDownloadRoundedIcon from "@mui/icons-material/FileDownloadRounded";
-import { Button } from "@mui/material";
+import { Button, Card } from "@mui/material";
 
 export default function Home() {
     const { register, handleSubmit } = useForm();
@@ -22,96 +23,98 @@ export default function Home() {
     const [texto, setTexto] = React.useState(false);
     const [conhecimento, setConhecimento] = React.useState(6);
     const [documento, setDocumento] = React.useState();
+    const [auxiliar, setAuxiliar] = React.useState([]);
+    const [edi, setEdi] = useState([]);
+    const [tamanho, setTamanho] = useState([]);
 
-    const onSubmit = async (data) => {
+    const onSubmit = (data) => {
 
-        const texto = data.documento.trim().split("\n");
-        const tamanho = data.documento.trim().split("\n").length;
+        const textoGeral = data.documento.trim().split("\n");
+        const tamanhoGeral = data.documento.trim().split("\n").length;
 
-        var card_main_top = document.getElementById("main_card");
-        card_main_top.innerText = "";
+        setTamanho(tamanhoGeral)
 
-        if (texto[tamanho - 1].length >= 43 && texto[tamanho - 1].length <= 45) {
+        setAuxiliar([])
+
+        if (textoGeral[tamanhoGeral - 1].length >= 43 && textoGeral[tamanhoGeral - 1].length <= 45) {
 
             var tamanhoData = 15 + fatura; //TAMANHO PADRAO DATA RESUMO
 
-            // CARD TOP NOTAS #1
+            // CARREGANDO DADOS PARA RESUMO
 
-            var card_top_linha = document.createElement("div");
-            card_top_linha.className = "main_card_top_linha";
+            var indicadorResumo = textoGeral[tamanhoGeral - 1].substring(0, 1);
+            var cnpjResumo = textoGeral[tamanhoGeral - 1].substring(1, 15);
+            var boletoResumo = textoGeral[tamanhoGeral - 1].substring(15, 15 + fatura);
+            var dataVencimentoResumo = textoGeral[tamanhoGeral - 1].substring(tamanhoData, tamanhoData + 2) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoData + 2, tamanhoData + 4) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoData + 4, tamanhoData + 8);
+            var valorTotalFaturaResumo = textoGeral[tamanhoGeral - 1].substring(parseInt(tamanhoData) + parseInt(8), textoGeral[tamanhoGeral - 1].length);
 
-            var main_card_top_linha_content = document.createElement("div");
-            main_card_top_linha_content.className = "main_card_top_linha_content";
+            auxiliar.push({ id: 0, edi: textoGeral[tamanhoGeral - 1], indicador: indicadorResumo, cnpj: cnpjResumo, boleto: boletoResumo, data: dataVencimentoResumo, valorTotal: valorTotalFaturaResumo });
 
-            var main_card_top_linha_content_title = document.createElement("span");
-            main_card_top_linha_content_title.className = "main_card_top_linha_content_title";
-            main_card_top_linha_content_title.innerHTML = tamanho - 1;
+            // CARREGANDO DADOS DAS NOTAS
 
-            var main_card_top_linha_content_subtitle = document.createElement("span");
-            main_card_top_linha_content_subtitle.className = "main_card_top_linha_content_subtitle";
-            main_card_top_linha_content_subtitle.innerHTML = "Notas"
+            var y = 1;
 
-            main_card_top_linha_content.appendChild(main_card_top_linha_content_title);
-            main_card_top_linha_content.appendChild(main_card_top_linha_content_subtitle);
-            card_top_linha.appendChild(main_card_top_linha_content);
-            // card_top.appendChild(card_top_linha);
-            card_main_top.appendChild(card_top_linha);
+            for (var i = 0; i < (tamanhoGeral - 1); i++) {
+                if (textoGeral[i] !== '') {
 
-            // CARD TOP NOTAS #2
+                    var tamanhoAuxiliar1 = 0;
+                    var tamanhoAuxiliar2 = 0;
 
-            var card_top_data = document.createElement("div");
-            card_top_data.className = "main_card_top_data";
+                    var indicadorNota = textoGeral[i].substring(0, 1);
+                    var cnpjNota = textoGeral[i].substring(1, 15);
+                    tamanhoAuxiliar1 = fatura + 15;
+                    var boletoNota = textoGeral[i].substring(15, tamanhoAuxiliar1);
+                    tamanhoAuxiliar2 = fatura + 16;
+                    var indicadorDevolucaoNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(4);
+                    var serieFiscaisNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(4);
+                    var cfopNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(2);
+                    var ocorrenciaCfopNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(6);
+                    var conhecimentoNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(8);
+                    var dataEmissaoNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar1 + 2) + "/" + textoGeral[i].substring(tamanhoAuxiliar1 + 2, tamanhoAuxiliar1 + 4) + "/" + textoGeral[i].substring(tamanhoAuxiliar1 + 4, tamanhoAuxiliar1 + 8);                    
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(14);
+                    var valorFreteNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(14);
+                    var valorDescontoNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(14);
+                    var valorAbatimentoNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(14);
+                    var valorAcrescimoNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(14);
+                    var valorBaseIcmsNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(14);
+                    var valorIcmsNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(5);
+                    var porcentagemAliquotaNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = tamanhoAuxiliar2;
+                    tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(6);
+                    var notaFiscalNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
 
-            var main_card_top_data_content = document.createElement("div");
-            main_card_top_data_content.className = "main_card_top_data_content";
+                    console.log('TESTE: ' + notaFiscalNota);
 
-            var div = document.createElement("div");
-            div.className = "main_card_top_linha_content_title";
+                    auxiliar.push({ id: y, edi: textoGeral[i], indicador: indicadorNota, cnpj: cnpjNota, boleto: boletoNota, indicadorDevolucao: indicadorDevolucaoNota, serieFiscais: serieFiscaisNota, cfop: cfopNota, ocorrenciaCfop: ocorrenciaCfopNota, conhecimento: conhecimentoNota, dataEmissao: dataEmissaoNota, valorFrete: valorFreteNota, valorDesconto: valorDescontoNota, valorAbatimento: valorAbatimentoNota, valorAcrescimo: valorAcrescimoNota, valorBaseIcmsNota: valorBaseIcmsNota, valorIcms: valorIcmsNota, porcentagemAliquota: porcentagemAliquotaNota, notaFiscal: notaFiscalNota});
 
-            var img = document.createElement("img");
-            img.className = "main_card_top_linha_content_title_img";
-            img.src = Calendar;
-
-            div.appendChild(img);
-
-            var main_card_top_data_content_subtitle = document.createElement("span");
-            main_card_top_data_content_subtitle.className = "main_card_top_data_content_subtitle";
-            main_card_top_data_content_subtitle.innerHTML = texto[tamanho - 1].substring(tamanhoData, tamanhoData + 2) + "/" + texto[tamanho - 1].substring(tamanhoData + 2, tamanhoData + 4) + "/" + texto[tamanho - 1].substring(tamanhoData + 4, tamanhoData + 8);
-
-            main_card_top_data_content.appendChild(div);
-            main_card_top_data_content.appendChild(main_card_top_data_content_subtitle);
-            card_top_data.appendChild(main_card_top_data_content);
-            card_main_top.appendChild(card_top_data);
-
-
-            // CARD TOP NOTAS #3
-
-            var card_top_info = document.createElement("div");
-            card_top_info.className = "main_card_top_info";
-
-            var card_top_info_content = document.createElement("div");
-            card_top_info_content.className = "main_card_top_info_content";
-
-            var card_top_info_content_title = document.createElement("span");
-            card_top_info_content_title.className = "main_card_top_info_content_title";
-            card_top_info_content_title.innerHTML = "CNPJ: " + texto[tamanho - 1].substring(1, 15);
-            card_top_info_content.appendChild(card_top_info_content_title);
-
-            var card_top_info_content_title = document.createElement("span");
-            card_top_info_content_title.className = "main_card_top_info_content_title";
-            card_top_info_content_title.innerHTML = "Fatura: " + texto[tamanho - 1].substring(15, 15 + fatura);
-            card_top_info_content.appendChild(card_top_info_content_title);
-
-            var card_top_info_content_title = document.createElement("span");
-            card_top_info_content_title.className = "main_card_top_info_content_title";
-            console.log(15 + (fatura*2))
-            card_top_info_content_title.innerHTML = "Valor Total: " + texto[tamanho - 1].substring((15 + (fatura*2)),texto[tamanho - 1].length);
-            card_top_info_content.appendChild(card_top_info_content_title);
-
-            card_top_info_content.appendChild(card_top_info_content_title);
-            card_top_info.appendChild(card_top_info_content)
-            card_main_top.appendChild(card_top_info);
-
+                    y++;
+                }
+            }
+            setEdi(auxiliar)
+            console.log(edi)
         } else {
 
         }
@@ -231,7 +234,7 @@ export default function Home() {
                         />
                     </div>
                     <div className="textField_content_bottom">
-                        <Button
+                        {/* <Button
                             variant="outlined"
                             component="label"
                             sx={{ backgroundColor: "white" }}
@@ -245,7 +248,7 @@ export default function Home() {
                                 type="file"
                                 onChange={handleChangeArquivo}
                             />
-                        </Button>
+                        </Button> */}
                         <Button
                             variant="contained"
                             sx={{ fontWeight: "700" }}
@@ -257,9 +260,44 @@ export default function Home() {
                 </Box>
             </Box>
             <Box className="card" >
-                <Box className="main_card" id="main_card">
+                <Box className="main_card" >
+                    {edi[0] && (
+                        <Box className="main_card_top">
+                            <Card className="main_card_top_notas">
+                                <Typography sx={{ fontSize: '32pt' }}>{tamanho}</Typography>
+                                <Typography sx={{ fontSize: '12pt' }}>Notas</Typography>
+                            </Card>
+                            <Card className="main_card_top_notas">
+                                <Typography sx={{ fontSize: '32pt' }}>#{edi[0].indicador}</Typography>
+                                <Typography sx={{ fontSize: '12pt' }}>{edi[0].indicador === 1 ? 'Conhecimento' : 'Pagamento'}</Typography>
+                            </Card>
+                            <Card className="main_card_top_data">
+                                <Box>
+                                    <img alt="calendario" className="main_card_top_data_img" src={Calendar} />
+                                </Box>
+                                <Typography>{edi[0].data}</Typography>
+                            </Card>
+                            <Card className="main_card_top_infos">
+                                <Box sx={{ marginLeft: '15px' }}>
+                                    <Box sx={{ display: 'flex' }}>
+                                        <Typography sx={{ fontSize: '13pt' }}><b>CNPJ:</b> {edi[0].boleto}</Typography>
+                                        <Typography sx={{ marginLeft: '15px', fontSize: '13pt' }}><b>Valor Total:</b> {edi[0].valorTotal}</Typography>
+                                    </Box>
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <Typography sx={{ fontSize: '24pt' }}><b>Boleto:</b> {edi[0].cnpj}</Typography>
+                                    </Box>
+                                </Box>
+                            </Card>
+                        </Box>
+                    )}
+                    {edi.map((key) => (
+                        <div style={{ display: 'grid', width: '100%' }}>
+                            {key.id}
+                        </div>
+                    ))}
                 </Box>
             </Box>
         </div>
     );
+
 }

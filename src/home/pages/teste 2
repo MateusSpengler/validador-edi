@@ -1,0 +1,40 @@
+.main_card_top_linha_content_title_img {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.main_card_top_linha_content_title_img {
+    top: 0px;
+    left: 0px;
+    width: 30%;
+    height: 30%;
+    object-fit: cover;
+    object-position: center center;
+    transition-delay: 500ms;
+}
+
+.main_card_top_info {
+    width: 65%;
+}
+
+.main_card_top_info_content {
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.main_card_top_linha_content,
+.main_card_top_data_content {
+    height: 10vh;
+    display: grid;
+    align-items: center;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}

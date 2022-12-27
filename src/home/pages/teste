@@ -1,0 +1,79 @@
+var card_main_top = document.getElementById("main_card");
+card_main_top.innerText = "";
+
+// CARD TOP NOTAS #1
+
+var card_top_linha = document.createElement("div");
+card_top_linha.className = "main_card_top_linha";
+
+var main_card_top_linha_content = document.createElement("div");
+main_card_top_linha_content.className = "main_card_top_linha_content";
+
+var main_card_top_linha_content_title = document.createElement("span");
+main_card_top_linha_content_title.className = "main_card_top_linha_content_title";
+main_card_top_linha_content_title.innerHTML = tamanho - 1;
+
+var main_card_top_linha_content_subtitle = document.createElement("span");
+main_card_top_linha_content_subtitle.className = "main_card_top_linha_content_subtitle";
+main_card_top_linha_content_subtitle.innerHTML = "Notas"
+
+main_card_top_linha_content.appendChild(main_card_top_linha_content_title);
+main_card_top_linha_content.appendChild(main_card_top_linha_content_subtitle);
+card_top_linha.appendChild(main_card_top_linha_content);
+// card_top.appendChild(card_top_linha);
+card_main_top.appendChild(card_top_linha);
+
+// CARD TOP NOTAS #2
+
+var card_top_data = document.createElement("div");
+card_top_data.className = "main_card_top_data";
+
+var main_card_top_data_content = document.createElement("div");
+main_card_top_data_content.className = "main_card_top_data_content";
+
+var div = document.createElement("div");
+div.className = "main_card_top_linha_content_title";
+
+var img = document.createElement("img");
+img.className = "main_card_top_linha_content_title_img";
+img.src = Calendar;
+
+div.appendChild(img);
+
+var main_card_top_data_content_subtitle = document.createElement("span");
+main_card_top_data_content_subtitle.className = "main_card_top_data_content_subtitle";
+main_card_top_data_content_subtitle.innerHTML = texto[tamanho - 1].substring(tamanhoData, tamanhoData + 2) + "/" + texto[tamanho - 1].substring(tamanhoData + 2, tamanhoData + 4) + "/" + texto[tamanho - 1].substring(tamanhoData + 4, tamanhoData + 8);
+
+main_card_top_data_content.appendChild(div);
+main_card_top_data_content.appendChild(main_card_top_data_content_subtitle);
+card_top_data.appendChild(main_card_top_data_content);
+card_main_top.appendChild(card_top_data);
+
+
+// CARD TOP NOTAS #3
+
+var card_top_info = document.createElement("div");
+card_top_info.className = "main_card_top_info";
+
+var card_top_info_content = document.createElement("div");
+card_top_info_content.className = "main_card_top_info_content";
+
+var card_top_info_content_title = document.createElement("span");
+card_top_info_content_title.className = "main_card_top_info_content_title";
+card_top_info_content_title.innerHTML = "CNPJ: " + texto[tamanho - 1].substring(1, 15);
+card_top_info_content.appendChild(card_top_info_content_title);
+
+var card_top_info_content_title = document.createElement("span");
+card_top_info_content_title.className = "main_card_top_info_content_title";
+card_top_info_content_title.innerHTML = "Fatura: " + texto[tamanho - 1].substring(15, 15 + fatura);
+card_top_info_content.appendChild(card_top_info_content_title);
+
+var card_top_info_content_title = document.createElement("span");
+card_top_info_content_title.className = "main_card_top_info_content_title";
+console.log(15 + (fatura * 2))
+card_top_info_content_title.innerHTML = "Valor Total: " + texto[tamanho - 1].substring((15 + (fatura * 2)), texto[tamanho - 1].length);
+card_top_info_content.appendChild(card_top_info_content_title);
+
+card_top_info_content.appendChild(card_top_info_content_title);
+card_top_info.appendChild(card_top_info_content)
+card_main_top.appendChild(card_top_info);

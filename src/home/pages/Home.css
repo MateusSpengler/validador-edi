@@ -177,96 +177,63 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
-
-.main_card {
-    display: flex;
-    justify-content: center;
-    width: auto;
-}
-
-.main_card_top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5vh;
-}
-
 
 /*CARD TOP*/
 
 .card {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .main_card {
     width: 60%;
+    display: grid;
+    display: inline;
+}
+
+.main_card_top {
     display: flex;
     justify-content: space-between;
-    height: auto;
+    width: 100%;
 }
 
-.main_card_top_linha,
-.main_card_top_data {
-    width: 15%;
-}
-
-.main_card_top_linha_content,
-.main_card_top_data_content {
-    height: 10vh;
+.main_card_top_notas {
+    width: 12%;
+    padding: 10px;
     display: grid;
+    justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.main_card_top_linha_content_title {
-    font-size: 34pt;
-    font-weight: 700;
+.main_card_top_data {
+    width: 12%;
+    padding: 10px;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+
+    background-color: red;
 
 }
 
-.main_card_top_linha_content_subtitle,
-.main_card_top_data_content_subtitle {
-    font-size: 14pt;
-}
-
-.main_card_top_linha_content_title_img {
-    position: relative;
-    width: 24px;
-    height: 24px;
-}
-
-.main_card_top_linha_content_title_img {
+.main_card_top_data_img {
     top: 0px;
     left: 0px;
-    width: 30%;
-    height: 30%;
+    width: 54px;
     object-fit: cover;
     object-position: center center;
     transition-delay: 500ms;
 }
 
-.main_card_top_info {
-    width: 65%;
-}
-
-.main_card_top_info_content {
-    height: 100%;
+.main_card_top_infos {
+    width: 55%;
     display: grid;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-
-.main_card_top_info_content_title{
-    
+    justify-content: stretch;
 }
 
 @media screen and (max-width: 800px) {
@@ -286,4 +253,16 @@ body {
     .textField_content_bottom {
         flex-direction: column;
     }
+
+    .main_card,
+    .main_card_top,
+    .main_card_top_notas,
+    .main_card_top_data,
+    .main_card_top_infos {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 5pt;
+    }
+
 }
