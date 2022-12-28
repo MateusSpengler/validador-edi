@@ -1,3 +1,24 @@
+    // const handleChangeArquivo = () => {
+    //     var preview = document.getElementById("edi-text");
+    //     var file = document.querySelector("input[type=file]").files[0];
+    //     console.log(file);
+
+    //     var reader = new FileReader();
+
+    //     reader.onloadstart = function (event) {
+    //         preview.innerHTML = "";
+    //         preview.innerHTML = event.target.result;
+    //         setTexto(true);
+    //     }
+    //     reader.onload = function (event) {
+    //         preview.innerHTML = "";
+    //         preview.innerHTML = event.target.result;
+    //         setTexto(true);
+    //     };
+    //     reader.readAsText(file);
+
+    // };
+
 var card_main_top = document.getElementById("main_card");
 card_main_top.innerText = "";
 
