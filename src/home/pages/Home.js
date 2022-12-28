@@ -13,7 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-// import FileDownloadRoundedIcon from "@mui/icons-material/FileDownloadRounded";
+import Divider from "@mui/material/Divider";
 import { Button, Card } from "@mui/material";
 
 export default function Home() {
@@ -24,9 +24,6 @@ export default function Home() {
         }
     });
 
-    // const [fatura, setFatura] = useState();
-    // const [texto, setTexto] = React.useState(false);
-    // const [conhecimento, setConhecimento] = useState();
     const [documento, setDocumento] = React.useState();
     const [auxiliar, setAuxiliar] = React.useState([]);
     const [edi, setEdi] = useState([]);
@@ -65,10 +62,13 @@ export default function Home() {
 
             tamanhoAuxiliar1 = tamanhoAuxiliar2;
             tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(tamanhoFatura);
+            console.log('TESTE: ' + tamanhoAuxiliar1);
+            console.log('TESTE: ' + tamanhoAuxiliar2);
             var boletoResumo = textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
             tamanhoAuxiliar1 = tamanhoAuxiliar2;
             tamanhoAuxiliar2 = tamanhoAuxiliar2 + 8;
-            var dataVencimentoResumo = textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1, tamanhoAuxiliar1 + 2) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1 + 2, tamanhoAuxiliar1 + 4) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1 + 4, tamanhoAuxiliar1 + 8);
+
+            var dataVencimentoResumo = textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1 + 6, tamanhoAuxiliar1 + 8) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1 + 4, tamanhoAuxiliar1 + 6) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1, tamanhoAuxiliar1 + 4);
             tamanhoAuxiliar1 = tamanhoAuxiliar2;
             tamanhoAuxiliar2 = textoGeral[tamanhoGeral - 1].length;
             var valorTotalFaturaResumo = textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
@@ -85,10 +85,27 @@ export default function Home() {
                     tamanhoAuxiliar1 = 0;
                     tamanhoAuxiliar2 = 0;
 
+                    var descricaoIndicadorNota = 'Inválido';
+
+                    if (parseInt(textoGeral[i].substring(0, 1)) === 1) {
+                        descricaoIndicadorNota = 'Conhecimento';
+                    } else if (parseInt(textoGeral[i].substring(0, 1)) === 2) {
+                        descricaoIndicadorNota = 'Pagamento';
+                    }
+
+                    var descricaoIndicadorDevolucaoNota = "Inválido";
+
+                    if (parseInt(textoGeral[i].substring(15, 16)) === 0) {
+                        descricaoIndicadorDevolucaoNota = "Normal";
+                    } else if (parseInt(textoGeral[i].substring(15, 16)) === 1) {
+                        descricaoIndicadorDevolucaoNota = "Devolução";
+                    }
+
                     var indicadorNota = textoGeral[i].substring(0, 1);
                     var cnpjNota = textoGeral[i].substring(1, 15);
                     tamanhoAuxiliar2 = parseInt(tamanhoFatura) + 15;
                     var boletoNota = textoGeral[i].substring(15, tamanhoAuxiliar2);
+                    tamanhoAuxiliar1 = 15;
                     tamanhoAuxiliar2 = parseInt(tamanhoFatura) + 16;
                     var indicadorDevolucaoNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
                     tamanhoAuxiliar1 = tamanhoAuxiliar2;
@@ -132,7 +149,7 @@ export default function Home() {
                     tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(6);
                     var notaFiscalNota = textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
 
-                    auxiliar.push({ id: y, edi: textoGeral[i], indicador: indicadorNota, cnpj: cnpjNota, boleto: boletoNota, indicadorDevolucao: indicadorDevolucaoNota, serieFiscais: serieFiscaisNota, cfop: cfopNota, ocorrenciaCfop: ocorrenciaCfopNota, conhecimento: conhecimentoNota, dataEmissao: dataEmissaoNota, valorFrete: valorFreteNota, valorDesconto: valorDescontoNota, valorAbatimento: valorAbatimentoNota, valorAcrescimo: valorAcrescimoNota, valorBaseIcmsNota: valorBaseIcmsNota, valorIcms: valorIcmsNota, porcentagemAliquota: porcentagemAliquotaNota, notaFiscal: notaFiscalNota });
+                    auxiliar.push({ id: y, edi: textoGeral[i], indicador: indicadorNota, descricaoIndicador: descricaoIndicadorNota, cnpj: cnpjNota, boleto: boletoNota, indicadorDevolucao: indicadorDevolucaoNota, descricaoIndicadorDevolucao: descricaoIndicadorDevolucaoNota, serieFiscais: serieFiscaisNota, cfop: cfopNota, ocorrenciaCfop: ocorrenciaCfopNota, conhecimento: conhecimentoNota, dataEmissao: dataEmissaoNota, valorFrete: valorFreteNota, valorDesconto: valorDescontoNota, valorAbatimento: valorAbatimentoNota, valorAcrescimo: valorAcrescimoNota, valorBaseIcms: valorBaseIcmsNota, valorIcms: valorIcmsNota, porcentagemAliquota: porcentagemAliquotaNota, notaFiscal: notaFiscalNota });
 
                     y++;
 
@@ -149,6 +166,15 @@ export default function Home() {
     const handleChangeDocumento = (event) => {
         setDocumento(event.target.value);
     };
+
+    const formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+
+        // These options are needed to round to whole numbers if that's what you want.
+        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+    });
 
     return (
         <div>
@@ -262,22 +288,56 @@ export default function Home() {
                                 <Typography>{edi[0].data}</Typography>
                             </Card>
                             <Card className="main_card_top_infos">
-                                <Box sx={{ marginLeft: '15px' }}>
+                                <Box sx={{ marginLeft: '15px', display: 'grid', alignContent: 'center' }}>
                                     <Box sx={{ display: 'flex' }}>
-                                        <Typography sx={{ fontSize: '13pt' }}><b>CNPJ:</b> {edi[0].cnpj}</Typography>
-                                        <Typography sx={{ marginLeft: '15px', fontSize: '13pt' }}><b>Valor Total:</b> {edi[0].valorTotal}</Typography>
+                                        <Typography sx={{ fontSize: '13pt' }}><b>Boleto:</b> {edi[0].boleto}</Typography>
+                                        <Typography sx={{ fontSize: '13pt', marginLeft: '15px' }}><b>CNPJ:</b> {edi[0].cnpj}</Typography>
                                     </Box>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                        <Typography sx={{ fontSize: '24pt' }}><b>Boleto:</b> {edi[0].cnpj}</Typography>
+                                        <Typography sx={{ fontSize: '16pt' }}><b>Valor Total:</b> {formatter.format(edi[0].valorTotal / 100)}</Typography>
                                     </Box>
                                 </Box>
                             </Card>
                         </Box>
                     )}
                     {edi.map((key) => (
-                        <Box key={key.id} style={{ display: 'flex', width: '100%' }}>
-                            <Box></Box>
-                        </Box>
+                        <div>
+                            {key.id === 0 ? <></> : (
+                                <Card key={key.id} className="main_card_content">
+                                    <Box className="card_content_titulo">
+                                        <Box className="card_content_titulo_id">{key.id}</Box>
+                                    </Box>
+                                    <Box className="card_content_body">
+                                        <Box className="card_content_body_info">
+                                            <Box sx={{ width: '14%' }}><b>{key.descricaoIndicador}</b></Box>
+                                            <Box sx={{ width: '14%' }}><b>Boleto:</b> {key.boleto}</Box>
+                                            <Box sx={{ width: '20%' }}><b>Conhecimento:</b> {key.conhecimento}</Box>
+                                            <Box className="card_content_body_infos"><b>Nota Fiscal:</b> {key.notaFiscal}</Box>
+                                            <Box className="card_content_body_infos"><b>CNPJ:</b> {key.cnpj}</Box>
+                                        </Box>
+                                        <Box className="card_content_body_info">
+                                            <Box sx={{ width: '14%' }}><b>{key.descricaoIndicadorDevolucao}</b></Box>
+                                            <Box sx={{ width: '14%' }}><b>Serie:</b> {key.serieFiscais}</Box>
+                                            <Box sx={{ width: '20%' }}><b>CFOP:</b> {key.cfop}</Box>
+                                            <Box className="card_content_body_infos"><b>Ocorrencia:</b> {key.ocorrenciaCfop}</Box>
+                                            <Box className="card_content_body_infos"><b>Data:</b> {key.dataEmissao}</Box>
+                                        </Box>
+                                        <Divider />
+                                        <Box className="card_content_body_info">
+                                            <Box sx={{ width: '20%' }}><b>Desconto:</b> {formatter.format(key.valorDesconto / 100)}</Box>
+                                            <Box sx={{ width: '20%' }}><b>Acrescimo:</b> {formatter.format(key.valorAcrescimo / 100)}</Box>
+                                            <Box sx={{ width: '20%' }}><b>Abatimento:</b> {formatter.format(key.valorAcrescimo / 100)}</Box>
+                                            <Box sx={{ width: '20%' }}><b>Aliquota:</b> {parseInt(key.porcentagemAliquota)} %</Box>
+                                        </Box>
+                                        <Box className="card_content_body_info">
+                                            <Box sx={{ width: '30%' }}><b>Frete:</b> {formatter.format(key.valorFrete / 100)}</Box>
+                                            <Box sx={{ width: '30%' }}><b>Base ICMS:</b> {formatter.format(key.valorBaseIcms / 100)}</Box>
+                                            <Box sx={{ width: '30%' }}><b>ICMS:</b> {formatter.format(key.valorIcms / 100)}</Box>
+                                        </Box>
+                                    </Box>
+                                </Card>
+                            )}
+                        </div>
                     ))}
                 </Box>
             </Box>

@@ -191,7 +191,7 @@ body {
 .main_card {
     width: 60%;
     display: grid;
-    display: inline;
+    gap: 10px;
 }
 
 .main_card_top {
@@ -215,9 +215,6 @@ body {
     display: grid;
     justify-content: center;
     text-align: center;
-
-    background-color: red;
-
 }
 
 .main_card_top_data_img {
@@ -234,6 +231,43 @@ body {
     display: grid;
     align-items: center;
     justify-content: stretch;
+}
+
+.main_card_content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.card_content_titulo {
+    width: 5%;
+}
+
+.card_content_titulo_id {
+    text-align: center;
+    border-radius: 0 0 12px 0;
+    background-color: black;
+    /*#1976d2*/
+    color: white;
+    padding: 10px;
+    font-weight: 700;
+}
+
+.card_content_body {
+    display: grid;
+    width: 92%;
+}
+
+.card_content_body_info {
+   display: flex;
+   width: 100%;
+   padding: 10px;
+   align-items: center;
+   justify-content: start;
+}
+
+.card_content_body_infos{
+    min-width: 17%;
 }
 
 @media screen and (max-width: 800px) {
