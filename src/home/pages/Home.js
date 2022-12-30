@@ -1,16 +1,21 @@
 import * as React from "react";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import NavigationIcon from '@mui/icons-material/Navigation';
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeRounded';
-import { Button, Card, Divider, Select, FormControl, MenuItem, InputLabel, TextField, Typography, Box, Fab } from "@mui/material";
+// import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeRounded';
+import { Button, Card, Divider, Select, FormControl, MenuItem, InputLabel, TextField, Typography, Box } from "@mui/material";
 import Lince from "../images/lince.png";
 import Calendar from "../images/calendar.jpg"
+import ScrollToTop from "react-scroll-to-top";
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Swal from 'sweetalert2'
 import "./Home.css";
 import "../javascript/HomeValidador";
 
 export default function Home() {
+
+    const [auxiliar, setAuxiliar] = React.useState([]);
+    const [edi, setEdi] = useState([]);
+
     const { register, handleSubmit, control } = useForm({
         defaultValues: {
             fatura: '6',
@@ -18,23 +23,15 @@ export default function Home() {
         }
     });
 
-    const [documento, setDocumento] = React.useState();
-    const [auxiliar, setAuxiliar] = React.useState([]);
-    const [edi, setEdi] = useState([]);
-
     function validarCNPJ(cnpj) {
 
         cnpj = cnpj.replace(/[^\d]+/g, '');
 
-
-
         if (cnpj === '') return false;
 
         if (cnpj.length !== 14) {
-            console.log('1');
             return false;
         }
-
 
         // Elimina CNPJs invalidos conhecidos
         if (cnpj === "00000000000000" ||
@@ -47,10 +44,8 @@ export default function Home() {
             cnpj === "77777777777777" ||
             cnpj === "88888888888888" ||
             cnpj === "99999999999999") {
-            console.log('2');
             return false;
         }
-
 
         // Valida DVs
         var tamanho = cnpj.length - 2
@@ -64,13 +59,9 @@ export default function Home() {
                 pos = 9;
         }
         var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        console.log('resultado: ' + resultado)
-        console.log('chart: ' + digitos.charAt(0))
         if (parseInt(resultado) !== parseInt(digitos.charAt(0))) {
-            console.log('3');
             return false;
         }
-
 
         tamanho = tamanho + 1;
         numeros = cnpj.substring(0, tamanho);
@@ -83,7 +74,6 @@ export default function Home() {
         }
         resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
         if (parseInt(resultado) !== parseInt(digitos.charAt(1))) {
-            console.log('4');
             return false;
         }
 
@@ -181,7 +171,6 @@ export default function Home() {
                     var cnpjAuxiliarNota = textoGeral[i].substring(1, 15);
                     var cnpjNota = cnpjAuxiliarNota.substring(0, 2) + "." + cnpjAuxiliarNota.substring(2, 5) + "." + cnpjAuxiliarNota.substring(5, 8) + "/" + cnpjAuxiliarNota.substring(8, 12) + "-" + cnpjAuxiliarNota.substring(12, 14);
                     var cnpjCheckIndicadorNota = validarCNPJ(cnpjAuxiliarNota);
-                    console.log('OPA: ' + cnpjCheckIndicadorNota)
                     tamanhoAuxiliar2 = parseInt(tamanhoFatura) + 15;
                     var boletoNota = textoGeral[i].substring(15, tamanhoAuxiliar2);
                     tamanhoAuxiliar1 = 15;
@@ -243,7 +232,6 @@ export default function Home() {
                 }
             }
             setEdi(auxiliar)
-            console.log(edi)
 
             document.getElementById("main_card").scrollIntoView()
 
@@ -263,16 +251,9 @@ export default function Home() {
 
     };
 
-    const handleChangeDocumento = (event) => {
-        setDocumento(event.target.value);
-    };
-
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-        // These options are needed to round to whole numbers if that's what you want.
-        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
     });
 
     const formatterPercent = new Intl.NumberFormat('pt-BR', {
@@ -288,15 +269,13 @@ export default function Home() {
                             <img src={Lince} className="logo_nav_bar" alt="logo_lince"></img>
                         </div>
                         <Typography
-                            className="teste"
                             sx={{ fontSize: "16pt", fontWeight: "700" }}
                         >
                             Validar documetos de EDI
                         </Typography>
                     </div>
-                    <Button sx={{ borderRadius: "8px" }}>
-                        <DarkModeOutlinedIcon />
-                    </Button>
+                    {/* <Button sx={{ borderRadius: "8px" }}>
+                    </Button> */}
                 </Box>
             </Box>
             <Box className="main">
@@ -351,14 +330,12 @@ export default function Home() {
                     <div className="textField_content_center">
                         <TextField
                             {...register("documento")}
-                            value={documento}
                             id="edi-text"
                             label="Electronic Data Interchange (EDI)"
                             multiline
                             rows={20}
                             placeholder="Digite o documento..."
                             sx={{ width: "100%", backgroundColor: "white" }}
-                            onChange={handleChangeDocumento}
                         />
                     </div>
                     <div className="textField_content_bottom">
@@ -375,7 +352,7 @@ export default function Home() {
             <Box className="card" >
                 <Box className="main_card" id="main_card">
                     {edi[0] && (
-                        <Box key={edi[0].id} className="main_card_top">
+                        <Box key={9999} className="main_card_top">
                             <Card className="main_card_top_notas">
                                 <Typography sx={{ fontSize: '32pt', fontWeight: 'bold' }}>{edi[0].quantidadeNotas}</Typography>
                                 <Typography sx={{ fontSize: '12pt', fontWeight: 'bold' }}>Notas</Typography>
@@ -385,7 +362,7 @@ export default function Home() {
                                 <Typography sx={{ fontSize: '12pt', fontWeight: 'bold' }}>{edi[0].descricaoIndicador}</Typography>
                             </Card>
                             <Card className="main_card_top_data">
-                                <Box>
+                                <Box sx={{ padding: '8px' }}>
                                     <img alt="calendario" className="main_card_top_data_img" src={Calendar} />
                                 </Box>
                                 {edi[0].dataCheckIndicador === true ? (<Typography sx={{ fontWeight: 'bold' }}>{edi[0].data}</Typography>) : (<Typography sx={{ color: '#C41631', fontWeight: 'bold' }}>{edi[0].data}</Typography>)}
@@ -402,25 +379,18 @@ export default function Home() {
                                 </Box>
                             </Card>
                         </Box>
-
                     )}
-                    {edi.map((key) => (
-                        <Box style={{ marginTop: '10px' }}>
+                    {edi.map((key, index) => (
+                        <Box key={index} style={{ marginTop: '10px' }}>
                             {key.id === 0 ? <></> : (
-                                <Card key={key.id} className="main_card_content">
-
+                                <Card className="main_card_content">
                                     {key.cnpjCheckIndicador === true && key.dataCheckIndicador === true && key.descricaoIndicador !== "Inválido" ? (<Box className="card_content_titulo_id">{key.id}</Box>) : (<Box sx={{ backgroundColor: '#C41631' }} className="card_content_titulo_id">{key.id}</Box>)}
-
                                     <Box className="card_content_body">
                                         <Box className="card_content_body_info">
-                                            {/* <Box sx={{ width: '20%' }}><b>{key.descricaoIndicador}</b></Box> */}
-
                                             {key.descricaoIndicador !== "Inválido" ? (<Box sx={{ width: '20%' }}><b>{key.descricaoIndicador}</b></Box>) : (<Box sx={{ width: '20%', color: '#C41631' }}><b>{key.descricaoIndicador}</b></Box>)}
-
                                             <Box sx={{ width: '20%' }}><b>Boleto:</b> {key.boleto}</Box>
                                             <Box sx={{ width: '20%' }}><b>Conhecimento:</b> {key.conhecimento}</Box>
                                             <Box className="card_content_body_infos"><b>Nota Fiscal:</b> {key.notaFiscal}</Box>
-
                                             {key.cnpjCheckIndicador === true ? (<Box className="card_content_body_infos"><b>CNPJ:</b> {key.cnpj}</Box>) : (<Box sx={{ color: '#C41631' }} className="card_content_body_infos"><b>CNPJ: {key.cnpj}</b></Box>)}
                                         </Box>
                                         <Divider />
@@ -429,9 +399,7 @@ export default function Home() {
                                             <Box sx={{ width: '20%' }}><b>Serie:</b> {key.serieFiscais}</Box>
                                             <Box sx={{ width: '20%' }}><b>CFOP:</b> {key.cfop}</Box>
                                             <Box className="card_content_body_infos"><b>Ocorrencia: </b> {key.ocorrenciaCfop}</Box>
-
                                             {key.dataCheckIndicador === true ? (<Box className="card_content_body_infos"><b>Data: </b> {key.dataEmissao}</Box>) : (<Box sx={{ color: '#C41631', fontWeight: 700 }} className="card_content_body_infos"><b>Data:</b> {key.dataEmissao}</Box>)}
-
                                         </Box>
                                         <Divider />
                                         <Box className="card_content_body_info">
@@ -447,24 +415,14 @@ export default function Home() {
                                             <Box sx={{ width: '20%' }}><b>ICMS:</b> {formatter.format(key.valorIcms / 100)}</Box>
                                         </Box>
                                     </Box>
-                                    {/* <Box sx={{ display: 'flex', width: '1%', backgroundColor: 'red' }}></Box> */}
+                                    {key.cnpjCheckIndicador === true && key.dataCheckIndicador === true && key.descricaoIndicador !== "Inválido" ? (<></>) : (<Box sx={{ display: 'flex', width: '0.3%', backgroundColor: '#C41631' }}></Box>)}
                                 </Card>
                             )}
-
                         </Box>
                     ))}
                 </Box>
-                {() => { document.getElementById("main_card").scrollIntoView() }}
             </Box>
-            {/* {pageYPosition > 300 && ( */}
-            <a href="#menu" className="back_top">
-                <Fab variant="extended" sx={{ position: 'fixed', bottom: '20px', right: '0', marginRight: '20px' }}>
-                    <NavigationIcon />
-                    Voltar ao Topo
-                </Fab>
-            </a>
-            {/* )} */}
-
+            <ScrollToTop smooth component={<KeyboardArrowUpIcon />} />
         </div >
     );
 }

@@ -110,7 +110,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
+    width: 70%;
     height: 80px;
     color: white;
     text-align: center;
@@ -150,7 +150,7 @@ body {
 }
 
 .content {
-    width: 60%;
+    width: 70%;
     height: auto;
 }
 
@@ -189,7 +189,7 @@ body {
 }
 
 .main_card {
-    width: 60%;
+    width: 70%;
     display: grid;
     gap: 10px;
 }
@@ -220,7 +220,7 @@ body {
 .main_card_top_data_img {
     top: 0px;
     left: 0px;
-    width: 54px;
+    width: 45px;
     object-fit: cover;
     object-position: center center;
     transition-delay: 500ms;
@@ -264,17 +264,57 @@ body {
     width: 100%;
     padding: 15px;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .card_content_body_infos {
     min-width: 17%;
-
 }
 
 html {
     scroll-behavior: smooth;
 }
+
+.back_top_visible{
+    visibility: visible;
+}
+
+.back_top_hidden{
+    visibility: hidden;
+}
+
+@media screen and (max-width: 1810px) {
+    .nav_bar,
+    .content,
+    .main_card{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1510px) {
+    .nav_bar,
+    .content,
+    .main_card{
+        width: 85%;
+    }
+}
+
+@media screen and (max-width: 1310px) {
+    .nav_bar,
+    .content,
+    .main_card{
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 1210px) {
+    .nav_bar,
+    .content,
+    .main_card{
+        width: 95%;
+    }
+}
+
 
 @media screen and (max-width: 1110px) {
 
@@ -319,19 +359,3 @@ html {
     }
 }
 
-@media screen and (max-width: 980px) {
-
-    .card_content_body,
-    .card_content_body_info {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .card_content_titulo_id,
-    .card_content_body {
-        width: 100%;
-        padding: 12px;
-        font-size: 12pt;
-    }
-
-}
