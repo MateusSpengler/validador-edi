@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-// import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeRounded';
 import { Button, Card, Divider, Select, FormControl, MenuItem, InputLabel, TextField, Typography, Box } from "@mui/material";
 import Lince from "../images/lince.png";
 import Calendar from "../images/calendar.jpg"
@@ -13,7 +12,7 @@ import "../javascript/HomeValidador";
 
 export default function Home() {
 
-    const [auxiliar, setAuxiliar] = React.useState([]);
+    const [auxiliar, setAuxiliar] = useState([]);
     const [edi, setEdi] = useState([]);
 
     const { register, handleSubmit, control } = useForm({
@@ -23,7 +22,19 @@ export default function Home() {
         }
     });
 
-    function validarCNPJ(cnpj) {
+    const formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
+
+    const formatterPercent = new Intl.NumberFormat('pt-BR', {
+        style: 'percent',
+    });
+
+    /**
+    * - *Português* Função para validar os CNPJ's
+    */
+    function cnpjValidator(cnpj) {
 
         cnpj = cnpj.replace(/[^\d]+/g, '');
 
@@ -33,7 +44,6 @@ export default function Home() {
             return false;
         }
 
-        // Elimina CNPJs invalidos conhecidos
         if (cnpj === "00000000000000" ||
             cnpj === "11111111111111" ||
             cnpj === "22222222222222" ||
@@ -47,7 +57,6 @@ export default function Home() {
             return false;
         }
 
-        // Valida DVs
         var tamanho = cnpj.length - 2
         var numeros = cnpj.substring(0, tamanho);
         var digitos = cnpj.substring(tamanho);
@@ -80,10 +89,16 @@ export default function Home() {
         return true;
     }
 
-    function checarData(data) {
+    /**
+    * - *Português* Função para validar as Datas
+    */
+    function dataChecker(data) {
         return data instanceof Date && !isNaN(data);
     }
 
+    /**
+    * - *Português* Função principal que valida todas as linhas e monta os cards
+    */
     const onSubmit = (data) => {
 
         const textoGeral = data.documento.trim().split("\n");
@@ -117,7 +132,7 @@ export default function Home() {
             var cnpjAuxiliar = textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
             var cnpjResumo = cnpjAuxiliar.substring(0, 2) + "." + cnpjAuxiliar.substring(2, 5) + "." + cnpjAuxiliar.substring(5, 8) + "/" + cnpjAuxiliar.substring(8, 12) + "-" + cnpjAuxiliar.substring(12, 14);
 
-            var cnpjCheckIndicadorResumo = validarCNPJ(cnpjAuxiliar);
+            var cnpjCheckIndicadorResumo = cnpjValidator(cnpjAuxiliar);
 
             tamanhoAuxiliar1 = tamanhoAuxiliar2;
             tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(tamanhoFatura);
@@ -131,7 +146,7 @@ export default function Home() {
 
             var dataCheckIndicadorResumo = false;
 
-            if (checarData(dataCheckResumo)) {
+            if (dataChecker(dataCheckResumo)) {
                 dataCheckIndicadorResumo = true;
             }
 
@@ -170,7 +185,7 @@ export default function Home() {
                     var indicadorNota = textoGeral[i].substring(0, 1);
                     var cnpjAuxiliarNota = textoGeral[i].substring(1, 15);
                     var cnpjNota = cnpjAuxiliarNota.substring(0, 2) + "." + cnpjAuxiliarNota.substring(2, 5) + "." + cnpjAuxiliarNota.substring(5, 8) + "/" + cnpjAuxiliarNota.substring(8, 12) + "-" + cnpjAuxiliarNota.substring(12, 14);
-                    var cnpjCheckIndicadorNota = validarCNPJ(cnpjAuxiliarNota);
+                    var cnpjCheckIndicadorNota = cnpjValidator(cnpjAuxiliarNota);
                     tamanhoAuxiliar2 = parseInt(tamanhoFatura) + 15;
                     var boletoNota = textoGeral[i].substring(15, tamanhoAuxiliar2);
                     tamanhoAuxiliar1 = 15;
@@ -196,7 +211,7 @@ export default function Home() {
 
                     var dataCheckIndicadorNota = false;
 
-                    if (checarData(dataCheckNota)) {
+                    if (dataChecker(dataCheckNota)) {
                         dataCheckIndicadorNota = true;
                     }
 
@@ -248,17 +263,7 @@ export default function Home() {
                 confirmButtonColor: '#626262'
             })
         }
-
     };
-
-    const formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });
-
-    const formatterPercent = new Intl.NumberFormat('pt-BR', {
-        style: 'percent',
-    });
 
     return (
         <div>
@@ -274,8 +279,6 @@ export default function Home() {
                             Validar documetos de EDI
                         </Typography>
                     </div>
-                    {/* <Button sx={{ borderRadius: "8px" }}>
-                    </Button> */}
                 </Box>
             </Box>
             <Box className="main">
@@ -352,9 +355,9 @@ export default function Home() {
             <Box className="card" >
                 <Box className="main_card" id="main_card">
                     {edi[0] && (
-                        <Box key={9999} className="main_card_top">
+                        <Box key={edi[0].id} className="main_card_top">
                             <Card className="main_card_top_notas">
-                                <Typography sx={{ fontSize: '32pt', fontWeight: 'bold' }}>{edi[0].quantidadeNotas}</Typography>
+                                <Typography sx={{ fontSize: '32pt', fontWeight: 'bold' }}>{edi.length - 1}</Typography>
                                 <Typography sx={{ fontSize: '12pt', fontWeight: 'bold' }}>Notas</Typography>
                             </Card>
                             <Card className="main_card_top_notas">
