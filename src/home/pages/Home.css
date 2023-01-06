@@ -110,7 +110,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
+    width: 70%;
     height: 80px;
     color: white;
     text-align: center;
@@ -150,7 +150,7 @@ body {
 }
 
 .content {
-    width: 60%;
+    width: 70%;
     height: auto;
 }
 
@@ -177,103 +177,151 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
-
-.main_card {
-    display: flex;
-    justify-content: center;
-    width: auto;
-}
-
-.main_card_top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5vh;
-}
-
 
 /*CARD TOP*/
 
 .card {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .main_card {
-    width: 60%;
+    width: 70%;
+    display: grid;
+    gap: 10px;
+}
+
+.main_card_top {
     display: flex;
     justify-content: space-between;
-    height: auto;
+    width: 100%;
 }
 
-.main_card_top_linha,
-.main_card_top_data {
-    width: 15%;
-}
-
-.main_card_top_linha_content,
-.main_card_top_data_content {
-    height: 10vh;
+.main_card_top_notas {
+    width: 12%;
+    padding: 10px;
     display: grid;
+    justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.main_card_top_linha_content_title {
-    font-size: 34pt;
-    font-weight: 700;
-
+.main_card_top_data {
+    width: 12%;
+    padding: 10px;
+    display: grid;
+    justify-content: center;
+    text-align: center;
 }
 
-.main_card_top_linha_content_subtitle,
-.main_card_top_data_content_subtitle {
-    font-size: 14pt;
-}
-
-.main_card_top_linha_content_title_img {
-    position: relative;
-    width: 24px;
-    height: 24px;
-}
-
-.main_card_top_linha_content_title_img {
+.main_card_top_data_img {
     top: 0px;
     left: 0px;
-    width: 30%;
-    height: 30%;
+    width: 45px;
     object-fit: cover;
     object-position: center center;
     transition-delay: 500ms;
 }
 
-.main_card_top_info {
-    width: 65%;
+.main_card_top_infos {
+    width: 55%;
+    display: grid;
+    align-items: center;
+    justify-content: stretch;
 }
 
-.main_card_top_info_content {
-    height: 100%;
-    display: grid;
+.main_card_content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.card_content_titulo {
+    width: 5%;
+}
+
+.card_content_titulo_id {
+    width: 6%;
+    display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: black;
+    /*#1976d2*/
+    color: white;
+    font-weight: 700;
 }
 
-.main_card_top_info_content_title{
-    
+.card_content_body {
+    display: grid;
+    width: 94%;
 }
 
-@media screen and (max-width: 800px) {
+.card_content_body_info {
+    display: flex;
+    width: 100%;
+    padding: 15px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.card_content_body_infos {
+    min-width: 17%;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.back_top_visible{
+    visibility: visible;
+}
+
+.back_top_hidden{
+    visibility: hidden;
+}
+
+@media screen and (max-width: 1810px) {
+    .nav_bar,
+    .content,
+    .main_card{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1510px) {
+    .nav_bar,
+    .content,
+    .main_card{
+        width: 85%;
+    }
+}
+
+@media screen and (max-width: 1310px) {
+    .nav_bar,
+    .content,
+    .main_card{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 1210px) {
+    .nav_bar,
+    .content,
+    .main_card{
+        width: 95%;
+    }
+}
+
+
+@media screen and (max-width: 1110px) {
 
     .content,
     .content_top,
-    .form_content_top {
+    .form_content_top,
+    .card_content_body {
         width: 100%;
         flex-direction: column;
     }
@@ -286,4 +334,28 @@ body {
     .textField_content_bottom {
         flex-direction: column;
     }
+
+    .main_card,
+    .main_card_top,
+    .main_card_top_notas,
+    .main_card_top_data,
+    .main_card_top_infos {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 5pt;
+    }
+
+    .main_card_content {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card_content_titulo_id,
+    .card_content_body {
+        width: 100%;
+        padding: 12px;
+        font-size: 12pt;
+    }
 }
+
