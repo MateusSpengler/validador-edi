@@ -6,6 +6,7 @@ import Lince from "../images/lince.png";
 import Calendar from "../images/calendar.jpg"
 import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { homeValidador } from "../javascript/HomeValidador";
 import Swal from 'sweetalert2'
 import "./Home.css";
 import "../javascript/HomeValidador";
@@ -30,71 +31,6 @@ export default function Home() {
     const formatterPercent = new Intl.NumberFormat('pt-BR', {
         style: 'percent',
     });
-
-    /**
-    * - *Português* Função para validar os CNPJ's
-    */
-    function cnpjValidator(cnpj) {
-
-        cnpj = cnpj.replace(/[^\d]+/g, '');
-
-        if (cnpj === '') return false;
-
-        if (cnpj.length !== 14) {
-            return false;
-        }
-
-        if (cnpj === "00000000000000" ||
-            cnpj === "11111111111111" ||
-            cnpj === "22222222222222" ||
-            cnpj === "33333333333333" ||
-            cnpj === "44444444444444" ||
-            cnpj === "55555555555555" ||
-            cnpj === "66666666666666" ||
-            cnpj === "77777777777777" ||
-            cnpj === "88888888888888" ||
-            cnpj === "99999999999999") {
-            return false;
-        }
-
-        var tamanho = cnpj.length - 2
-        var numeros = cnpj.substring(0, tamanho);
-        var digitos = cnpj.substring(tamanho);
-        var soma = 0;
-        var pos = tamanho - 7;
-        for (var i = tamanho; i >= 1; i--) {
-            soma += numeros.charAt(tamanho - i) * pos--;
-            if (pos < 2)
-                pos = 9;
-        }
-        var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        if (parseInt(resultado) !== parseInt(digitos.charAt(0))) {
-            return false;
-        }
-
-        tamanho = tamanho + 1;
-        numeros = cnpj.substring(0, tamanho);
-        soma = 0;
-        pos = tamanho - 7;
-        for (i = tamanho; i >= 1; i--) {
-            soma += numeros.charAt(tamanho - i) * pos--;
-            if (pos < 2)
-                pos = 9;
-        }
-        resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        if (parseInt(resultado) !== parseInt(digitos.charAt(1))) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-    * - *Português* Função para validar as Datas
-    */
-    function dataChecker(data) {
-        return data instanceof Date && !isNaN(data);
-    }
 
     /**
     * - *Português* Função principal que valida todas as linhas e monta os cards
@@ -132,7 +68,7 @@ export default function Home() {
             var cnpjAuxiliar = textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1, tamanhoAuxiliar2);
             var cnpjResumo = cnpjAuxiliar.substring(0, 2) + "." + cnpjAuxiliar.substring(2, 5) + "." + cnpjAuxiliar.substring(5, 8) + "/" + cnpjAuxiliar.substring(8, 12) + "-" + cnpjAuxiliar.substring(12, 14);
 
-            var cnpjCheckIndicadorResumo = cnpjValidator(cnpjAuxiliar);
+            var cnpjCheckIndicadorResumo = homeValidador.cnpjValidator(cnpjAuxiliar);
 
             tamanhoAuxiliar1 = tamanhoAuxiliar2;
             tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(tamanhoFatura);
@@ -141,12 +77,11 @@ export default function Home() {
             tamanhoAuxiliar2 = tamanhoAuxiliar2 + 8;
             var dataVencimentoResumo = textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1 + 6, tamanhoAuxiliar1 + 8) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1 + 4, tamanhoAuxiliar1 + 6) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1, tamanhoAuxiliar1 + 4);
 
-
             var dataCheckResumo = new Date(textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1 + 4, tamanhoAuxiliar1 + 6) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1 + 6, tamanhoAuxiliar1 + 8) + "/" + textoGeral[tamanhoGeral - 1].substring(tamanhoAuxiliar1, tamanhoAuxiliar1 + 4));
 
             var dataCheckIndicadorResumo = false;
 
-            if (dataChecker(dataCheckResumo)) {
+            if (homeValidador.dataChecker(dataCheckResumo)) {
                 dataCheckIndicadorResumo = true;
             }
 
@@ -176,16 +111,16 @@ export default function Home() {
 
                     var descricaoIndicadorDevolucaoNota = "Inválido";
 
-                    if (parseInt(textoGeral[i].substring(15, 16)) === 0) {
+                    if (parseInt(textoGeral[i].substring(21, 22)) === 0) {
                         descricaoIndicadorDevolucaoNota = "Normal";
-                    } else if (parseInt(textoGeral[i].substring(15, 16)) === 1) {
+                    } else if (parseInt(textoGeral[i].substring(21, 22)) === 1) {
                         descricaoIndicadorDevolucaoNota = "Devolução";
                     }
 
                     var indicadorNota = textoGeral[i].substring(0, 1);
                     var cnpjAuxiliarNota = textoGeral[i].substring(1, 15);
                     var cnpjNota = cnpjAuxiliarNota.substring(0, 2) + "." + cnpjAuxiliarNota.substring(2, 5) + "." + cnpjAuxiliarNota.substring(5, 8) + "/" + cnpjAuxiliarNota.substring(8, 12) + "-" + cnpjAuxiliarNota.substring(12, 14);
-                    var cnpjCheckIndicadorNota = cnpjValidator(cnpjAuxiliarNota);
+                    var cnpjCheckIndicadorNota = homeValidador.cnpjValidator(cnpjAuxiliarNota);
                     tamanhoAuxiliar2 = parseInt(tamanhoFatura) + 15;
                     var boletoNota = textoGeral[i].substring(15, tamanhoAuxiliar2);
                     tamanhoAuxiliar1 = 15;
@@ -206,12 +141,10 @@ export default function Home() {
                     tamanhoAuxiliar1 = tamanhoAuxiliar2;
                     tamanhoAuxiliar2 = parseInt(tamanhoAuxiliar2) + parseInt(8);
                     var dataEmissaoNota = textoGeral[i].substring(tamanhoAuxiliar1 + 6, tamanhoAuxiliar1 + 8) + "/" + textoGeral[i].substring(tamanhoAuxiliar1 + 4, tamanhoAuxiliar1 + 6) + "/" + textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar1 + 4);
-
                     var dataCheckNota = new Date(textoGeral[i].substring(tamanhoAuxiliar1 + 4, tamanhoAuxiliar1 + 6) + "/" + textoGeral[i].substring(tamanhoAuxiliar1 + 6, tamanhoAuxiliar1 + 8) + "/" + textoGeral[i].substring(tamanhoAuxiliar1, tamanhoAuxiliar1 + 4));
-
                     var dataCheckIndicadorNota = false;
 
-                    if (dataChecker(dataCheckNota)) {
+                    if (homeValidador.dataChecker(dataCheckNota)) {
                         dataCheckIndicadorNota = true;
                     }
 
